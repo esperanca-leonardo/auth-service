@@ -6,6 +6,7 @@ import org.springframework.http.*;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
@@ -48,5 +49,16 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
         .buildBadCredentialsProblemDetail(BAD_CREDENTIALS);
 
     return new ResponseEntity<>(problemDetail, BAD_CREDENTIALS.getStatus());
+  }
+
+  @Override
+  protected ResponseEntity<Object> handleMissingServletRequestParameter(
+      MissingServletRequestParameterException ex, HttpHeaders headers,
+      HttpStatusCode status, WebRequest request) {
+
+    final ProblemDetail problemDetail = this.problemDetailBuilder
+        .buildMissingServletRequestParameter(ex);
+
+    return super.handleExceptionInternal(ex, problemDetail, headers, status, request);
   }
 }
