@@ -8,10 +8,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ProblemDetail;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.MissingServletRequestParameterException;
 
 import java.net.URI;
 import java.util.List;
 
+import static com.esperanca.microservices.authservice.core.exception.problemdetail.enums.ProblemDetailType.MISSING_REQUEST_PARAMETER;
 import static org.springframework.http.ProblemDetail.forStatusAndDetail;
 
 @Component
@@ -69,6 +71,12 @@ public class ProblemDetailBuilder {
         "and password and try again.";
 
     return this.buildProblemDetail(problemDetailType, detail);
+  }
+
+  public ProblemDetail buildMissingServletRequestParameter(
+      MissingServletRequestParameterException ex) {
+
+    return this.buildProblemDetail(MISSING_REQUEST_PARAMETER, ex.getMessage());
   }
 }
 
