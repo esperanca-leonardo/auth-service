@@ -12,7 +12,8 @@ import static org.springframework.http.HttpStatus.NOT_FOUND;
 public enum ProblemDetailType {
   INVALID_DATA("/invalid-data", "Invalid data", BAD_REQUEST),
   USER_NOT_FOUND("/user-not-found", "User not found", NOT_FOUND),
-  BAD_CREDENTIALS("/bad-credentials", "Bad credentials", BAD_REQUEST);
+  BAD_CREDENTIALS("/bad-credentials", "Bad credentials", BAD_REQUEST),
+  MISSING_REQUEST_PARAMETER("/missing-request-parameter", "Missing request parameter", BAD_REQUEST);
 
   private final URI type;
   private final String title;
