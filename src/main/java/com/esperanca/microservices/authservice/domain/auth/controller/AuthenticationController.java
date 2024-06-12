@@ -1,5 +1,6 @@
 package com.esperanca.microservices.authservice.domain.auth.controller;
 
+import com.esperanca.microservices.authservice.domain.auth.openapi.AuthenticationControllerOpenApi;
 import com.esperanca.microservices.authservice.domain.token.service.TokenService;
 import com.esperanca.microservices.authservice.domain.user.dtos.LoginDto;
 import com.esperanca.microservices.authservice.domain.user.dtos.SignInDto;
@@ -19,13 +20,14 @@ import java.io.IOException;
 @RestController
 @RequestMapping("/api/auth")
 @AllArgsConstructor
-public class AuthenticationController {
+public class AuthenticationController implements AuthenticationControllerOpenApi {
 
   private final TokenService tokenService;
   private final UserRepository repository;
   private final BCryptPasswordEncoder passwordEncoder;
   private final AuthenticationManager authenticationManager;
 
+  @Override
   @PostMapping("/sign-in")
   public ResponseEntity<User> signIn(@RequestBody @Valid SignInDto signInDto) {
 
@@ -40,6 +42,7 @@ public class AuthenticationController {
     return ResponseEntity.ok(user);
   }
 
+  @Override
   @PostMapping("/login")
   public ResponseEntity<String> login(@RequestBody @Valid LoginDto loginDto)
       throws IOException, InterruptedException {
