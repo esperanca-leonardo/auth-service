@@ -1,7 +1,7 @@
 package com.esperanca.microservices.authservice.domain.auth.controller;
 
 import com.esperanca.microservices.authservice.domain.auth.model.Token;
-import com.esperanca.microservices.authservice.domain.auth.openapi.AuthenticationControllerOpenApi;
+import com.esperanca.microservices.authservice.domain.auth.controller.openapi.AuthenticationControllerOpenApi;
 import com.esperanca.microservices.authservice.domain.auth.service.AuthenticationService;
 import com.esperanca.microservices.authservice.domain.user.dtos.LoginDto;
 import com.esperanca.microservices.authservice.domain.user.dtos.SignInDto;
