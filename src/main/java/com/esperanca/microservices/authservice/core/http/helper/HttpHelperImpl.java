@@ -1,7 +1,9 @@
 package com.esperanca.microservices.authservice.core.http.helper;
 
+import com.esperanca.microservices.authservice.core.http.exceptions.ExternalServiceException;
 import com.esperanca.microservices.authservice.core.http.exceptions.HttpInterruptedException;
 import com.esperanca.microservices.authservice.core.http.exceptions.HttpRequestException;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
@@ -12,6 +14,7 @@ import java.net.http.HttpResponse;
 
 import static java.net.http.HttpClient.newHttpClient;
 import static java.net.http.HttpRequest.newBuilder;
+import static org.springframework.http.HttpStatus.OK;
 
 @Component
 public class HttpHelperImpl implements HttpHelper {
@@ -56,6 +59,16 @@ public class HttpHelperImpl implements HttpHelper {
       throw new HttpInterruptedException(
           "HTTP request was interrupted", interruptedException
       );
+    }
+  }
+
+  @Override
+  public void isNotSuccessfulResponse(HttpResponse<String> response)
+      throws ExternalServiceException {
+    final boolean isNotOkResponse = response.statusCode() != OK.value();
+
+    if (isNotOkResponse) {
+      throw new ExternalServiceException(response.statusCode());
     }
   }
 }
