@@ -1,4 +1,4 @@
-package com.esperanca.microservices.authservice.core.security.config;
+package com.esperanca.microservices.authservice.core.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
