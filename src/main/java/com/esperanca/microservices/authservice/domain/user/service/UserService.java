@@ -1,5 +1,6 @@
 package com.esperanca.microservices.authservice.domain.user.service;
 
+import com.esperanca.microservices.authservice.domain.user.entity.User;
 import com.esperanca.microservices.authservice.domain.user.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -26,5 +27,13 @@ public class UserService implements UserDetailsService {
       );
     }
     return userDetails;
+  }
+
+  public boolean existsByUsername(String username) {
+    return this.repository.existsByUsername(username);
+  }
+
+  public User save(User user) {
+    return this.repository.save(user);
   }
 }
