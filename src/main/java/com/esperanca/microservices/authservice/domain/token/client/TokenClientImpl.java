@@ -26,20 +26,16 @@ public class TokenClientImpl implements TokenClient {
   private String tokenServicePort;
 
   @Override
-  public String generateToken(String username) throws RuntimeException {
+  public String generateToken(String username) {
     final URI uri = this.httpHelper.createUri(
         this.tokenServiceHost, this.tokenServicePort,
         "api/tokens/generate", "username", username
     );
-
     final HttpRequest request = this.httpHelper.buildRequest(uri);
     final HttpResponse<String> response = this.httpHelper.sendRequest(request);
 
-    if (response.statusCode() == 200) {
-      return this.jsonHelper.getValueFromKey(response.body(), "token");
-    }
-    else {
-      throw new RuntimeException("Error generating token: " + response.body());
-    }
+    this.httpHelper.isNotSuccessfulResponse(response);
+
+    return this.jsonHelper.getValueFromKey(response.body(), "token");
   }
 }
