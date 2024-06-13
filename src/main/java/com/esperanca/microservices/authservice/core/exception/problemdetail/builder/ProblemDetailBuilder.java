@@ -11,6 +11,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 
 import java.net.URI;
+import java.time.Instant;
 import java.util.List;
 
 import static com.esperanca.microservices.authservice.core.exception.problemdetail.enums.ProblemDetailType.MISSING_REQUEST_PARAMETER;
@@ -22,20 +23,19 @@ public class ProblemDetailBuilder {
 
   private final ProblemDetailHelper problemDetailHelper;
 
-  private ProblemDetail createProblemDetail(ProblemDetailType problemDetailType,
-      String detail) {
+  private ProblemDetail createProblemDetail(
+      ProblemDetailType problemDetailType, String detail) {
 
     final URI type = problemDetailType.getType();
     final String title = problemDetailType.getTitle();
     final HttpStatus status = problemDetailType.getStatus();
+    final Instant timestamp = this.problemDetailHelper.createTimestampWithZeroNanos();
 
     final ProblemDetail problemDetail = forStatusAndDetail(status, detail);
 
     problemDetail.setType(type);
     problemDetail.setTitle(title);
-    problemDetail.setProperty("timestamp",
-        problemDetailHelper.createTimestampWithZeroNanos()
-    );
+    problemDetail.setProperty("timestamp", timestamp);
 
     return problemDetail;
   }
