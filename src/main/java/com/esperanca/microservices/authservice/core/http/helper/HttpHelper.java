@@ -1,5 +1,6 @@
 package com.esperanca.microservices.authservice.core.http.helper;
 
+import com.esperanca.microservices.authservice.core.http.exceptions.ExternalServiceException;
 import com.esperanca.microservices.authservice.core.http.exceptions.HttpInterruptedException;
 import com.esperanca.microservices.authservice.core.http.exceptions.HttpRequestException;
 
@@ -17,4 +18,7 @@ public interface HttpHelper {
 
   HttpResponse<String> sendRequest(HttpRequest request)
       throws HttpRequestException, HttpInterruptedException;
+
+  void isNotSuccessfulResponse(HttpResponse<String> response)
+      throws ExternalServiceException;
 }
