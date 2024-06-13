@@ -17,6 +17,5 @@ public class SignInDto {
   private String password;
 
   @Schema(example = "ADMIN")
-  @NotBlank(message = "role cannot be blank")
   private Role role;
 }
