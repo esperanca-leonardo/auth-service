@@ -26,7 +26,7 @@ public class TokenClientImpl implements TokenClient {
   private String tokenServicePort;
 
   @Override
-  public String generateToken(String username) {
+  public String generateToken(final String username) {
     final URI uri = this.httpHelper.createUri(
         this.tokenServiceHost, this.tokenServicePort,
         "api/tokens/generate", "username", username
