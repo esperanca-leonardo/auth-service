@@ -1,6 +1,7 @@
 package com.esperanca.microservices.authservice.domain.token.client;
 
 import com.esperanca.microservices.authservice.core.http.helper.HttpHelper;
+import com.esperanca.microservices.authservice.core.json.JsonHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -11,6 +12,9 @@ import java.net.http.HttpResponse;
 
 @Component
 public class TokenClientImpl implements TokenClient {
+
+  @Autowired
+  private JsonHelper jsonHelper;
 
   @Autowired
   private HttpHelper httpHelper;
@@ -32,7 +36,7 @@ public class TokenClientImpl implements TokenClient {
     final HttpResponse<String> response = this.httpHelper.sendRequest(request);
 
     if (response.statusCode() == 200) {
-      return response.body();
+      return this.jsonHelper.getValueFromKey(response.body(), "token");
     }
     else {
       throw new RuntimeException("Error generating token: " + response.body());
